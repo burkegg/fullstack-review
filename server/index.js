@@ -18,9 +18,9 @@ app.use(bodyParser.json());
 
 app.use('/', function(request, response, next) {
   console.log('request method: ', request.method);
-  if (request.method !== 'GET'){
-    console.log('request', request);
-  }
+  // if (request.method !== 'GET'){
+  //   console.log('request', request);
+  // }
   
   next();
 });
@@ -32,7 +32,6 @@ app.post('/repos', function (req, res) {
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
-  console.log("request headers: ", req.headers);
   getReposByUsername(req.body.username, function(error, response){
     if(error){
       console.log(error);
@@ -40,30 +39,31 @@ app.post('/repos', function (req, res) {
     }
     // tuple or three tuple
     // [username, reponame, stargazers]
-    let dataToSave = [];
     let data = JSON.parse(response.body);
-
+    let dataForClient = [];
     for (let idx = 0; idx < data.length; idx++){
+      let dataToSave = [];
       dataToSave[0] = req.body.username;
       dataToSave[1] = data[idx].name;
       dataToSave[2] = data[idx].stargazers_count;
+      dataForClient.push(dataToSave);
       db.save(dataToSave, function(error, data){
         if (error) {
           console.log(error);
           res.send(404, 'error');
         } else {
           //console.log('saved data ', dataToSave);
-          res.send('Data saved to database');
         }
       })
     }
     if (error){
       res.send(404, 'error');
     } else {
-      res.send(201, 'Sum data got added!');
+      console.log('the data for client*****************');
+      console.log('data: ', dataForClient);
+      res.send(201, JSON.stringify(dataForClient));
     }
   });
-  //getReposByUsername('burkegg');
 });
 
 

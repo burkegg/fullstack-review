@@ -25,6 +25,9 @@ class App extends React.Component {
         method: 'post',
         contentType: 'application/json',
         data: JSON.stringify(formattedData),
+        success: function(data) {
+          console.log('data ', data);
+        }
     });
   }
   
