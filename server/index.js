@@ -61,7 +61,8 @@ app.post('/repos', function (req, res) {
     } else {
       console.log('the data for client*****************');
       console.log('data: ', dataForClient);
-      res.send(201, JSON.stringify(dataForClient));
+      //res.send(201, JSON.stringify(dataForClient));
+      res.status(201).send(dataForClient);
     }
   });
 });
@@ -76,10 +77,12 @@ app.get('/repos', function (req, res) {
     if (err) {
       res.send(404, 'error!');
     } else {
-      res.send(resp);
+      console.log("the response in server - get", resp);
+      res.status(200).send(resp)
+      //res.send(null, resp);
     }
   });
-  
+   
   
 });
 
