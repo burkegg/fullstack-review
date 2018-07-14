@@ -29,7 +29,6 @@ class App extends React.Component {
           dataToSave[2] = data[idx].stargazers_count;
           pushToState.push(dataToSave);
         }
-        
         this.setState({repos: pushToState}, ()=>console.log(this.state));
       }.bind(this)
     })
