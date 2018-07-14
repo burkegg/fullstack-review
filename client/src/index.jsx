@@ -13,10 +13,28 @@ class App extends React.Component {
     this.search = this.search.bind(this);
     this.searchToState = this.searchToState.bind(this);
   }
-
+  // id username reponame stars
   componentDidMount(){
-    
+    $.ajax({
+      url: 'http://localhost:1128/repos',
+      method: 'get',
+      success: function(data) {
+        console.log(this);
+        console.log(data);
+        let pushToState = [];
+        for (let idx = 0; idx < data.length; idx++) {
+          let dataToSave = [];
+          dataToSave[0] = data[idx].username;
+          dataToSave[1] = data[idx].name;
+          dataToSave[2] = data[idx].stargazers_count;
+          pushToState.push(dataToSave);
+        }
+        
+        this.setState({repos: pushToState});
+      }.bind(this)
+    })
   }
+  
   search (term) {
     //url includes /repos
     console.log(`${term} was searched in top level`);
@@ -42,7 +60,8 @@ class App extends React.Component {
   }
   
   render () {
-    return (<div>
+    return (
+    <div>
       <h1>Github Fetcher</h1>
       <Search 
       onSearch={this.search}

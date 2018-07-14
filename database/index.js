@@ -44,7 +44,7 @@ let getRecs = (searchTerm = {}, callback) => {
   console.log('inside getRecs');
   let ouput = RepoModel.find( searchTerm ).
   limit(25).
-  sort('stargazers_count').
+  sort('-stargazers_count').
   exec(callback);
    
   
