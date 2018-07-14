@@ -8,10 +8,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      repos: [],
-      
+      repos: [], 
     }
-
+    this.search = this.search.bind(this);
+    this.searchToState = this.searchToState.bind(this);
   }
 
   search (term) {
@@ -27,8 +27,15 @@ class App extends React.Component {
         data: JSON.stringify(formattedData),
         success: function(data) {
           console.log('data ', data);
-        }
-    });
+          console.log('this ', this);
+          // I lost my this binding?!?!?!?!
+          this.setState({repos: data}, ()=>console.log(this.state));
+        }.bind(this)
+    })
+  }
+
+  searchToState(data) {
+    this.setState({repos:data});
   }
   
   render () {
@@ -36,7 +43,7 @@ class App extends React.Component {
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
       <Search 
-      onSearch={this.search.bind(this)}
+      onSearch={this.search}
       />
     </div>)
   }
