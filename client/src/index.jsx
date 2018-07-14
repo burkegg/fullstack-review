@@ -14,6 +14,9 @@ class App extends React.Component {
     this.searchToState = this.searchToState.bind(this);
   }
 
+  componentDidMount(){
+    
+  }
   search (term) {
     //url includes /repos
     console.log(`${term} was searched in top level`);

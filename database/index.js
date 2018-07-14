@@ -42,17 +42,12 @@ let save = (dataArray, callback) => {
 
 let getRecs = (searchTerm = {}, callback) => {
   console.log('inside getRecs');
-  let ouput = RepoModel.find( searchTerm, function(err, data){
-    if(err){
-      console.log('error got called');
-      callback(err);
-      //return console.error(err);
-    } else {
-      console.log(data);
-      console.log('successfully got recs?!?!  WHERE ARE THEY!?!?!')
-      callback(null, data);
-    }
-  } );
+  let ouput = RepoModel.find( searchTerm ).
+  limit(25).
+  sort('stargazers_count').
+  exec(callback);
+   
+  
 }
 
 module.exports = {
@@ -66,7 +61,19 @@ module.exports = {
 
 
 
-
+// let getRecs = (searchTerm = {}, callback) => {
+//   console.log('inside getRecs');
+//   let ouput = RepoModel.find( searchTerm, function(err, data){
+//     if(err){
+//       console.log('error got called');
+//       callback(err);
+//       //return console.error(err);
+//     } else {
+//       console.log(data);
+//       callback(null, data);
+//     }
+//   } );
+// }
 
 
 
