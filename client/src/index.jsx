@@ -25,12 +25,12 @@ class App extends React.Component {
         for (let idx = 0; idx < data.length; idx++) {
           let dataToSave = [];
           dataToSave[0] = data[idx].username;
-          dataToSave[1] = data[idx].name;
+          dataToSave[1] = data[idx].repo;
           dataToSave[2] = data[idx].stargazers_count;
           pushToState.push(dataToSave);
         }
         
-        this.setState({repos: pushToState});
+        this.setState({repos: pushToState}, ()=>console.log(this.state));
       }.bind(this)
     })
   }
