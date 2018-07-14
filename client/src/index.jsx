@@ -16,26 +16,24 @@ class App extends React.Component {
 
   search (term) {
     //url includes /repos
-    console.log(`${term} was searched`);
+    console.log(`${term} was searched in top level`);
     // Do the ajax thing!!!!!
+    let formattedData = {username: term};
     $.ajax({
-      method: 'POST',
-      url: 'http://localhost:1128/repos',
-      data: { username: term }
-    })
-    .done(function( msg ) {
-      console.log("Done sending to server: " , msg);
+        url: 'http://localhost:1128/repos',
+        dataType: 'json',
+        method: 'post',
+        contentType: 'application/json',
+        data: JSON.stringify(formattedData),
     });
-    
   }
-
+  
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
       <Search 
       onSearch={this.search.bind(this)}
-      
       />
     </div>)
   }

@@ -36,7 +36,7 @@ let save = (dataArray, callback) => {
 
 let getRecs = (callback) => {
   console.log('inside getRecs');
-  let ouput = RepoModel.find( {stargazers: { $gt : 2 } }, function(err, data){
+  let ouput = RepoModel.find( {stargazers: { $gt : 0 } }, function(err, data){
     if(err){
       return console.error(err);
     } else {

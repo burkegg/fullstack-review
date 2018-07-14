@@ -18,7 +18,10 @@ app.use(bodyParser.json());
 
 app.use('/', function(request, response, next) {
   console.log('request method: ', request.method);
-  console.log('request body', request.body);
+  if (request.method !== 'GET'){
+    console.log('request', request);
+  }
+  
   next();
 });
 
@@ -29,7 +32,7 @@ app.post('/repos', function (req, res) {
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
-  console.log(req.body);
+  console.log("request headers: ", req.headers);
   getReposByUsername(req.body.username, function(error, response){
     if(error){
       console.log(error);
@@ -41,9 +44,6 @@ app.post('/repos', function (req, res) {
     let data = JSON.parse(response.body);
 
     for (let idx = 0; idx < data.length; idx++){
-      // console.log(name);
-      // console.log(data[idx].name);
-      // console.log(data[idx].stargazers_count);
       dataToSave[0] = req.body.username;
       dataToSave[1] = data[idx].name;
       dataToSave[2] = data[idx].stargazers_count;
@@ -63,7 +63,7 @@ app.post('/repos', function (req, res) {
       res.send(201, 'Sum data got added!');
     }
   });
-  getReposByUsername('burkegg');
+  //getReposByUsername('burkegg');
 });
 
 
