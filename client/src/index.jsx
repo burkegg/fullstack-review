@@ -8,21 +8,35 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      repos: []
+      repos: [],
+      
     }
 
   }
 
   search (term) {
+    //url includes /repos
     console.log(`${term} was searched`);
-    // TODO
+    // Do the ajax thing!!!!!
+    $.ajax({
+      method: 'POST',
+      url: 'http://localhost:1128/repos',
+      data: { username: term }
+    })
+    .done(function( msg ) {
+      console.log("Done sending to server: " , msg);
+    });
+    
   }
 
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
-      <Search onSearch={this.search.bind(this)}/>
+      <Search 
+      onSearch={this.search.bind(this)}
+      
+      />
     </div>)
   }
 }
