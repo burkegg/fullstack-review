@@ -15,12 +15,14 @@ class App extends React.Component {
   }
   // id username reponame stars
   componentDidMount(){
-    $.ajax({
+    this.getMethod();
+  }
+  
+  getMethod(){
+      $.ajax({
       url: 'http://localhost:1128/repos',
       method: 'get',
       success: function(data) {
-        console.log(this);
-        console.log(data);
         let pushToState = [];
         for (let idx = 0; idx < data.length; idx++) {
           let dataToSave = [];
@@ -46,10 +48,9 @@ class App extends React.Component {
         contentType: 'application/json',
         data: JSON.stringify(formattedData),
         success: function(data) {
-          console.log('data ', data);
-          console.log('this ', this);
+          this.getMethod();
           // I lost my this binding?!?!?!?!
-          this.setState({repos: data}, ()=>console.log(this.state));
+          //this.setState({repos: data});
         }.bind(this)
     })
   }
